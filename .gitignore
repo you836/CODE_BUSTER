@@ -1,4 +1,4 @@
-﻿# Dependencies
+# Dependencies
 node_modules/
 frontend/node_modules/
 .pnp
@@ -26,8 +26,14 @@ ENV/
 .env.local
 .env.*.local
 
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+
 # OS / Editor
 .DS_Store
 Thumbs.db
 .vscode/
 .idea/
+

@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.database.connection import create_tables, AsyncSessionLocal
+from app.database import connection
 from app.database.seed import seed_database
 from app.api import auth, dashboard, roles, permissions, access_logs, analysis, policy, audit, report
 
@@ -12,7 +12,8 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:5173", "http://localhost:5174"],
+    allow_origins=["*"],
+    allow_origin_regex=r"https?://.*",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -20,9 +21,10 @@ app.add_middleware(
 
 @app.on_event("startup")
 async def on_startup():
-    await create_tables()
-    async with AsyncSessionLocal() as db:
+    await connection.create_tables()
+    async with connection.AsyncSessionLocal() as db:
         await seed_database(db)
+
 
 @app.get("/api/health")
 async def health_check():
