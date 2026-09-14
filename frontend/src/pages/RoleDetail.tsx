@@ -29,43 +29,46 @@ export default function RoleDetail() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" onClick={() => navigate('/roles')} className="text-slate-400 hover:text-white">
-          <ArrowLeft className="h-5 w-5" />
-        </Button>
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">{role.role_name}</h1>
-          <p className="text-sm text-slate-400 font-mono mt-1">{role.arn || `arn:aws:iam::123456789012:role/${role.role_name}`}</p>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <Button variant="ghost" size="icon" onClick={() => navigate('/roles')} className="text-slate-400 hover:text-white shrink-0">
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
+          <div className="min-w-0">
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight truncate">{role.role_name}</h1>
+            <p className="text-xs sm:text-sm text-slate-400 font-mono mt-0.5 truncate">{role.arn || `arn:aws:iam::123456789012:role/${role.role_name}`}</p>
+          </div>
         </div>
-        <div className="ml-auto">
-          <Button onClick={() => navigate('/policy', { state: { roleId: role.id } })} className="gap-2">
+        <div>
+          <Button onClick={() => navigate('/policy', { state: { roleId: role.id } })} className="w-full sm:w-auto gap-2 text-xs sm:text-sm">
             <FileCode className="h-4 w-4" />
             Generate Least-Privilege Policy
           </Button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card>
-          <CardHeader className="pb-2"><CardTitle className="text-sm text-slate-400">Total Permissions</CardTitle></CardHeader>
-          <CardContent><div className="text-2xl font-bold">{role.total_permissions}</div></CardContent>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+        <Card className="bg-slate-900/80 border-slate-800">
+          <CardHeader className="p-3 sm:p-4 pb-1"><CardTitle className="text-xs sm:text-sm text-slate-400">Total Perms</CardTitle></CardHeader>
+          <CardContent className="p-3 sm:p-4 pt-1"><div className="text-xl sm:text-2xl font-bold">{role.total_permissions}</div></CardContent>
         </Card>
-        <Card>
-          <CardHeader className="pb-2"><CardTitle className="text-sm text-slate-400">Used Permissions</CardTitle></CardHeader>
-          <CardContent><div className="text-2xl font-bold text-success">{role.used_permissions}</div></CardContent>
+        <Card className="bg-slate-900/80 border-slate-800">
+          <CardHeader className="p-3 sm:p-4 pb-1"><CardTitle className="text-xs sm:text-sm text-slate-400">Used Perms</CardTitle></CardHeader>
+          <CardContent className="p-3 sm:p-4 pt-1"><div className="text-xl sm:text-2xl font-bold text-success">{role.used_permissions}</div></CardContent>
         </Card>
-        <Card>
-          <CardHeader className="pb-2"><CardTitle className="text-sm text-slate-400">Unused Permissions</CardTitle></CardHeader>
-          <CardContent><div className="text-2xl font-bold text-warning">{role.unused_permissions}</div></CardContent>
+        <Card className="bg-slate-900/80 border-slate-800">
+          <CardHeader className="p-3 sm:p-4 pb-1"><CardTitle className="text-xs sm:text-sm text-slate-400">Unused Perms</CardTitle></CardHeader>
+          <CardContent className="p-3 sm:p-4 pt-1"><div className="text-xl sm:text-2xl font-bold text-warning">{role.unused_permissions}</div></CardContent>
         </Card>
-        <Card>
-          <CardHeader className="pb-2 flex flex-row items-center justify-between"><CardTitle className="text-sm text-slate-400">Risk Score</CardTitle><Badge variant={role.risk_level.toLowerCase() as any}>{role.risk_level}</Badge></CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold mb-2">{role.risk_score}/100</div>
+        <Card className="bg-slate-900/80 border-slate-800">
+          <CardHeader className="p-3 sm:p-4 pb-1 flex flex-row items-center justify-between"><CardTitle className="text-xs sm:text-sm text-slate-400">Risk Score</CardTitle><Badge variant={role.risk_level.toLowerCase() as any} className="text-[10px]">{role.risk_level}</Badge></CardHeader>
+          <CardContent className="p-3 sm:p-4 pt-1">
+            <div className="text-xl sm:text-2xl font-bold mb-1.5">{role.risk_score}/100</div>
             <Progress value={role.risk_score} className="h-2" indicatorClassName={role.risk_score > 80 ? 'bg-critical' : 'bg-warning'} />
           </CardContent>
         </Card>
       </div>
+
 
       <div className="rounded-md border border-slate-700 bg-slate-900 overflow-hidden">
         <div className="p-4 border-b border-slate-700 flex justify-between items-center bg-slate-800/50">

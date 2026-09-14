@@ -94,29 +94,30 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+      {/* Responsive KPI Grid: 2 cols on mobile, 3 on tablet, 6 on desktop */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-4">
         {kpis.map((k, i) => (
-          <Card key={i} className="overflow-hidden">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-slate-400 truncate">{k.title}</CardTitle>
-              <k.icon className={`h-4 w-4 shrink-0 ${k.color}`} />
+          <Card key={i} className="overflow-hidden bg-slate-900/80 border-slate-800 backdrop-blur-md">
+            <CardHeader className="flex flex-row items-center justify-between p-3 sm:p-4 pb-1 sm:pb-2">
+              <CardTitle className="text-xs sm:text-sm font-medium text-slate-400 truncate">{k.title}</CardTitle>
+              <k.icon className={`h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0 ${k.color}`} />
             </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold truncate">{k.value}</div>
+            <CardContent className="p-3 sm:p-4 pt-1 sm:pt-2">
+              <div className="text-xl sm:text-2xl font-bold truncate text-slate-100">{k.value}</div>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card>
-          <CardHeader>
-            <CardTitle>Permissions by Risk Level</CardTitle>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+        <Card className="bg-slate-900/80 border-slate-800 backdrop-blur-md">
+          <CardHeader className="p-4 sm:p-6 pb-2">
+            <CardTitle className="text-base sm:text-lg">Permissions by Risk Level</CardTitle>
           </CardHeader>
-          <CardContent className="h-[300px]">
+          <CardContent className="h-[260px] sm:h-[300px] p-2 sm:p-6 pt-0">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
-                <Pie data={data.permissions_by_risk} cx="50%" cy="50%" innerRadius={60} outerRadius={100} paddingAngle={5} dataKey="value">
+                <Pie data={data.permissions_by_risk} cx="50%" cy="50%" innerRadius={50} outerRadius={85} paddingAngle={5} dataKey="value">
                   {data.permissions_by_risk.map((entry, index) => {
                     const RISK_COLORS: Record<string, string> = {
                       CRITICAL: '#a855f7',
@@ -127,22 +128,22 @@ export default function Dashboard() {
                     return <Cell key={`cell-${index}`} fill={entry.color || RISK_COLORS[entry.name] || '#64748b'} />;
                   })}
                 </Pie>
-                <RechartsTooltip contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b' }} />
+                <RechartsTooltip contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b', borderRadius: '8px' }} />
               </PieChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Risk Reduction Trend</CardTitle>
+        <Card className="bg-slate-900/80 border-slate-800 backdrop-blur-md">
+          <CardHeader className="p-4 sm:p-6 pb-2">
+            <CardTitle className="text-base sm:text-lg">Risk Reduction Trend</CardTitle>
           </CardHeader>
-          <CardContent className="h-[300px]">
+          <CardContent className="h-[260px] sm:h-[300px] p-2 sm:p-6 pt-0">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={data.risk_reduction_over_time}>
-                <XAxis dataKey="date" stroke="#64748b" />
-                <YAxis stroke="#64748b" />
-                <RechartsTooltip contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b' }} />
+              <LineChart data={data.risk_reduction_over_time} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <XAxis dataKey="date" stroke="#64748b" tick={{ fontSize: 11 }} />
+                <YAxis stroke="#64748b" tick={{ fontSize: 11 }} />
+                <RechartsTooltip contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b', borderRadius: '8px' }} />
                 <Line type="monotone" dataKey="score" stroke="#10b981" strokeWidth={2} />
               </LineChart>
             </ResponsiveContainer>
@@ -150,18 +151,19 @@ export default function Dashboard() {
         </Card>
       </div>
 
-      <div className="flex justify-center pt-8 pb-12">
-        <Button size="lg" onClick={startMitigation} className="h-16 px-12 text-lg font-bold animate-pulse-glow bg-primary hover:bg-primary/90 text-slate-950">
+      <div className="flex justify-center pt-4 sm:pt-8 pb-8 sm:pb-12 px-2">
+        <Button size="lg" onClick={startMitigation} className="w-full sm:w-auto h-14 sm:h-16 px-6 sm:px-12 text-base sm:text-lg font-bold animate-pulse-glow bg-primary hover:bg-primary/90 text-slate-950 cursor-pointer">
           🚀 START IAM ANALYSIS
         </Button>
       </div>
 
       <Dialog open={mitigationOpen} onOpenChange={setMitigationOpen}>
-        <DialogContent className="max-w-2xl bg-slate-900 border-slate-700">
-          <DialogHeader>
-            <DialogTitle className="text-xl">Autonomous Mitigation Workflow</DialogTitle>
+        <DialogContent className="max-w-2xl w-[92vw] sm:w-full max-h-[85vh] overflow-y-auto bg-slate-900 border-slate-700 p-4 sm:p-6">
+          <DialogHeader className="p-0 pb-4">
+            <DialogTitle className="text-lg sm:text-xl">Autonomous Mitigation Workflow</DialogTitle>
           </DialogHeader>
-          <div className="space-y-4 py-4">
+          <div className="space-y-3 sm:space-y-4 py-2">
+
             {[
               "Collecting IAM Data...",
               "Analyzing Access Logs...",

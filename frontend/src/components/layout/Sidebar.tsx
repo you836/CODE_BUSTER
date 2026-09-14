@@ -3,7 +3,7 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { 
   LayoutDashboard, Users, Search, ListChecks, FileCode, 
   Play, GitBranch, ShieldCheck, ScrollText, FileText, Settings, Shield,
-  Zap, Loader2, LogOut, User, Activity
+  Zap, Loader2, LogOut, User, Activity, X
 } from 'lucide-react';
 import LineSidebar, { SidebarItem } from '@/components/ui/LineSidebar';
 import { useAuth } from '@/hooks/useAuth';
@@ -23,7 +23,12 @@ const navItems: SidebarItem[] = [
   { name: 'Settings', path: '/settings', icon: Settings },
 ];
 
-export const Sidebar = () => {
+interface SidebarProps {
+  mobileOpen?: boolean;
+  onClose?: () => void;
+}
+
+export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, onClose }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logout } = useAuth();
@@ -42,6 +47,7 @@ export const Sidebar = () => {
   const handleItemClick = (index: number, label: string, item: SidebarItem) => {
     if (typeof item === 'object' && item.path) {
       navigate(item.path);
+      if (onClose) onClose();
     }
   };
 
@@ -63,6 +69,7 @@ export const Sidebar = () => {
             setMitigationMsg('Mitigation verified!');
             setTimeout(() => setMitigationMsg(null), 3000);
             navigate('/candidates');
+            if (onClose) onClose();
           } else {
             setMitigationMsg(run.current_state || 'Mitigating...');
           }
@@ -80,26 +87,58 @@ export const Sidebar = () => {
   };
 
   return (
-    <div className="w-64 bg-slate-950/80 backdrop-blur-xl border-r border-slate-800/60 h-full flex flex-col z-20 select-none">
-      {/* Clickable Header / Logo */}
-      <Link 
-        to="/dashboard" 
-        className="p-5 flex items-center gap-3 border-b border-slate-800/50 hover:bg-slate-900/40 transition-colors group cursor-pointer"
-        title="Go to Dashboard"
+    <>
+      {/* Mobile Backdrop */}
+      {mobileOpen && (
+        <div 
+          className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-40 md:hidden transition-opacity duration-300"
+          onClick={onClose}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Sidebar Container */}
+      <aside 
+        className={`
+          fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] h-full flex flex-col select-none
+          bg-slate-950/95 backdrop-blur-2xl border-r border-slate-800/70 shadow-2xl
+          transition-transform duration-300 ease-in-out
+          md:static md:w-64 md:translate-x-0 md:shadow-none
+          ${mobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+        `}
       >
-        <div className="h-10 w-10 rounded-lg bg-primary/15 border border-primary/30 flex items-center justify-center group-hover:scale-105 transition-transform animate-pulse-glow">
-          <Shield className="h-6 w-6 text-primary" />
+        {/* Clickable Header / Logo */}
+        <div className="flex items-center justify-between border-b border-slate-800/50 pr-3">
+          <Link 
+            to="/dashboard" 
+            onClick={onClose}
+            className="p-5 flex items-center gap-3 hover:bg-slate-900/40 transition-colors group cursor-pointer flex-1"
+            title="Go to Dashboard"
+          >
+            <div className="h-10 w-10 rounded-lg bg-primary/15 border border-primary/30 flex items-center justify-center group-hover:scale-105 transition-transform animate-pulse-glow">
+              <Shield className="h-6 w-6 text-primary" />
+            </div>
+            <div>
+              <span className="font-bold text-base tracking-tight text-slate-100 group-hover:text-primary transition-colors block">
+                IAM Mitigator
+              </span>
+              <span className="text-[10px] uppercase font-mono tracking-widest text-primary/80 flex items-center gap-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-primary animate-ping" />
+                Cyber SOC
+              </span>
+            </div>
+          </Link>
+          {/* Close button for mobile screens */}
+          <button
+            onClick={onClose}
+            className="md:hidden p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800/60 transition-colors cursor-pointer"
+            title="Close menu"
+            aria-label="Close menu"
+          >
+            <X className="h-5 w-5" />
+          </button>
         </div>
-        <div>
-          <span className="font-bold text-base tracking-tight text-slate-100 group-hover:text-primary transition-colors block">
-            IAM Mitigator
-          </span>
-          <span className="text-[10px] uppercase font-mono tracking-widest text-primary/80 block flex items-center gap-1.5">
-            <span className="h-1.5 w-1.5 rounded-full bg-primary animate-ping" />
-            Cyber SOC
-          </span>
-        </div>
-      </Link>
+
 
       {/* Nav List */}
       <div className="flex-1 overflow-y-auto py-3 px-2">
@@ -162,6 +201,8 @@ export const Sidebar = () => {
           <LogOut className="h-4 w-4" />
         </button>
       </div>
-    </div>
+      </aside>
+    </>
   );
 };
+

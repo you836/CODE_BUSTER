@@ -65,13 +65,13 @@ export default function Candidates() {
           <h1 className="text-2xl font-bold tracking-tight">Mitigation Candidates</h1>
           <p className="text-slate-400">Proposed least-privilege permission decommissionings ready for approval</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2 w-full sm:w-auto">
           {candidates.some(c => c.status === 'pending') && (
-            <Button onClick={handleApproveAll} className="gap-2 bg-emerald-600 hover:bg-emerald-500 text-white">
+            <Button onClick={handleApproveAll} className="flex-1 sm:flex-none gap-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs sm:text-sm">
               <CheckCheck className="h-4 w-4" /> Approve All Pending
             </Button>
           )}
-          <Button variant="outline" onClick={() => navigate('/policy')}>
+          <Button variant="outline" onClick={() => navigate('/policy')} className="flex-1 sm:flex-none text-xs sm:text-sm">
             View Proposed Policy
           </Button>
         </div>
@@ -80,8 +80,9 @@ export default function Candidates() {
       <div className="grid grid-cols-1 gap-4">
         {candidates.map(candidate => (
           <Card key={candidate.id} className="border-slate-700 bg-slate-900">
-            <CardContent className="p-6">
+            <CardContent className="p-4 sm:p-6">
               <div className="flex flex-col lg:flex-row justify-between gap-6">
+
                 
                 <div className="flex-1 space-y-4">
                   <div className="flex items-center gap-3">

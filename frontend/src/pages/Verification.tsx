@@ -28,28 +28,29 @@ export default function Verification() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Security Verification</h1>
-        <p className="text-slate-400">Final checks before policy deployment</p>
+        <h1 className="text-xl sm:text-2xl font-bold tracking-tight">Security Verification</h1>
+        <p className="text-xs sm:text-sm text-slate-400">Final checks before policy deployment</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="bg-slate-900 border-slate-700">
-          <CardHeader className="pb-2"><CardTitle className="text-sm text-slate-400">Score Before</CardTitle></CardHeader>
-          <CardContent><div className="text-4xl font-bold text-danger">49<span className="text-lg text-slate-500">/100</span></div></CardContent>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+        <Card className="bg-slate-900/80 border-slate-700">
+          <CardHeader className="p-4 pb-2"><CardTitle className="text-xs sm:text-sm text-slate-400">Score Before</CardTitle></CardHeader>
+          <CardContent className="p-4 pt-0"><div className="text-3xl sm:text-4xl font-bold text-danger">49<span className="text-base text-slate-500">/100</span></div></CardContent>
         </Card>
-        <Card className="bg-slate-900 border-slate-700">
-          <CardHeader className="pb-2"><CardTitle className="text-sm text-slate-400">Score After</CardTitle></CardHeader>
-          <CardContent><div className="text-4xl font-bold text-success">91<span className="text-lg text-slate-500">/100</span></div></CardContent>
+        <Card className="bg-slate-900/80 border-slate-700">
+          <CardHeader className="p-4 pb-2"><CardTitle className="text-xs sm:text-sm text-slate-400">Score After</CardTitle></CardHeader>
+          <CardContent className="p-4 pt-0"><div className="text-3xl sm:text-4xl font-bold text-success">91<span className="text-base text-slate-500">/100</span></div></CardContent>
         </Card>
         <Card className="bg-primary/10 border-primary/30">
-          <CardHeader className="pb-2"><CardTitle className="text-sm text-primary">Risk Reduction</CardTitle></CardHeader>
-          <CardContent>
-            <div className="flex items-center gap-2 text-4xl font-bold text-primary">
-              <ArrowUp className="h-8 w-8" /> 42%
+          <CardHeader className="p-4 pb-2"><CardTitle className="text-xs sm:text-sm text-primary">Risk Reduction</CardTitle></CardHeader>
+          <CardContent className="p-4 pt-0">
+            <div className="flex items-center gap-2 text-3xl sm:text-4xl font-bold text-primary">
+              <ArrowUp className="h-6 w-6 sm:h-8 sm:w-8" /> 42%
             </div>
           </CardContent>
         </Card>
       </div>
+
 
       <Card className="border-slate-700 bg-slate-900">
         <CardHeader>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bell, LogOut, User, Terminal } from 'lucide-react';
+import { Bell, LogOut, User, Terminal, Menu } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useLocation } from 'react-router-dom';
 import TextType from '@/components/ui/TextType';
@@ -72,18 +72,33 @@ const getPageTitles = (pathname: string): string[] => {
   return [`${name} // Cloud IAM Security Operations`, 'Autonomous Cloud Least-Privilege Mitigator'];
 };
 
-export const TopNav = () => {
+interface TopNavProps {
+  onToggleMobileMenu?: () => void;
+}
+
+export const TopNav: React.FC<TopNavProps> = ({ onToggleMobileMenu }) => {
   const { user, logout } = useAuth();
   const location = useLocation();
 
   const currentTexts = getPageTitles(location.pathname);
 
   return (
-    <header className="h-16 bg-slate-950/70 border-b border-slate-800/60 flex items-center justify-between px-6 backdrop-blur-xl sticky top-0 z-30">
-      <div className="flex items-center gap-3 min-w-0">
-        <div className="h-8 w-8 rounded-md bg-primary/10 border border-primary/25 flex items-center justify-center text-primary flex-shrink-0">
+    <header className="h-16 bg-slate-950/80 border-b border-slate-800/60 flex items-center justify-between px-3 sm:px-6 backdrop-blur-xl sticky top-0 z-30">
+      <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+        {/* Mobile Hamburger Menu Toggle */}
+        <button
+          onClick={onToggleMobileMenu}
+          className="md:hidden p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/70 border border-slate-800 transition-colors flex-shrink-0 cursor-pointer"
+          title="Open Navigation Menu"
+          aria-label="Open Navigation Menu"
+        >
+          <Menu className="h-5 w-5 text-primary" />
+        </button>
+
+        <div className="h-8 w-8 rounded-md bg-primary/10 border border-primary/25 hidden sm:flex items-center justify-center text-primary flex-shrink-0">
           <Terminal className="h-4 w-4" />
         </div>
+
         <div className="flex flex-col min-w-0">
           <TextType
             key={location.pathname}
@@ -95,27 +110,31 @@ export const TopNav = () => {
             cursorCharacter="_"
             cursorClassName="text-primary font-bold ml-0.5"
             cursorBlinkDuration={0.45}
-            className="text-sm md:text-base font-bold font-mono tracking-tight text-slate-100 truncate"
+            className="text-xs sm:text-sm md:text-base font-bold font-mono tracking-tight text-slate-100 truncate max-w-[170px] xs:max-w-[220px] sm:max-w-md md:max-w-xl"
             loop={true}
           />
-          <span className="text-[10px] font-mono text-slate-400 tracking-wider uppercase hidden sm:block">
+          <span className="text-[9px] sm:text-[10px] font-mono text-slate-400 tracking-wider uppercase hidden sm:block truncate">
             Autonomous Cloud IAM Mitigator // SOC Level-1 Active
           </span>
         </div>
       </div>
       
-      <div className="flex items-center gap-4 flex-shrink-0">
-        <button className="text-slate-400 hover:text-white relative p-1">
-          <Bell className="h-5 w-5" />
-          <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-primary animate-pulse"></span>
+      <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
+        <button className="text-slate-400 hover:text-white relative p-1.5 rounded-lg hover:bg-slate-900/60 transition-colors cursor-pointer" title="Notifications">
+          <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
+          <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-primary animate-pulse"></span>
         </button>
         
-        <div className="flex items-center gap-2 pl-4 border-l border-slate-700/60">
-          <div className="h-8 w-8 rounded-full bg-primary/15 border border-primary/30 flex items-center justify-center text-primary font-bold text-xs">
-            <User className="h-4 w-4" />
+        <div className="flex items-center gap-2 pl-2 sm:pl-4 border-l border-slate-800">
+          <div className="h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-primary/15 border border-primary/30 flex items-center justify-center text-primary font-bold text-xs flex-shrink-0">
+            <User className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </div>
-          <span className="text-sm font-medium text-slate-200 hidden md:inline">{user?.username || 'Admin'}</span>
-          <button onClick={logout} title="Sign Out" className="ml-2 text-slate-400 hover:text-danger p-1 transition-colors">
+          <span className="text-xs sm:text-sm font-medium text-slate-200 hidden md:inline">{user?.username || 'Admin'}</span>
+          <button 
+            onClick={logout} 
+            title="Sign Out" 
+            className="text-slate-400 hover:text-danger p-1.5 rounded-lg hover:bg-danger/10 transition-colors cursor-pointer"
+          >
             <LogOut className="h-4 w-4" />
           </button>
         </div>
@@ -123,3 +142,4 @@ export const TopNav = () => {
     </header>
   );
 };
+

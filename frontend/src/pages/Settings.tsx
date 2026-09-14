@@ -161,35 +161,35 @@ export default function Settings() {
   return (
     <div className="space-y-6 max-w-6xl mx-auto pb-12">
       {/* Top Header & Master Action Bar */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-slate-900/60 p-6 rounded-2xl border border-slate-800/80 backdrop-blur-xl">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-slate-900/60 p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-slate-800/80 backdrop-blur-xl">
         <div className="space-y-1">
           <div className="flex items-center gap-2.5">
-            <div className="h-9 w-9 rounded-xl bg-primary/20 border border-primary/40 flex items-center justify-center text-primary shadow-[0_0_15px_rgba(6,182,212,0.3)]">
-              <Sliders className="h-5 w-5" />
+            <div className="h-8 w-8 sm:h-9 sm:w-9 rounded-xl bg-primary/20 border border-primary/40 flex items-center justify-center text-primary shadow-[0_0_15px_rgba(6,182,212,0.3)] shrink-0">
+              <Sliders className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
             <div>
-              <h1 className="text-2xl font-black tracking-tight text-slate-100 flex items-center gap-3">
+              <h1 className="text-lg sm:text-2xl font-black tracking-tight text-slate-100 flex flex-wrap items-center gap-2 sm:gap-3">
                 System Settings & Orchestration
-                <Badge variant="outline" className="text-xs border-primary/40 text-primary bg-primary/10">SOC TIER-1</Badge>
+                <Badge variant="outline" className="text-[10px] sm:text-xs border-primary/40 text-primary bg-primary/10">SOC TIER-1</Badge>
               </h1>
             </div>
           </div>
-          <p className="text-sm text-slate-400">
+          <p className="text-xs sm:text-sm text-slate-400">
             Configure AI reasoning models, AWS multi-region connectors, simulation sandbox rules, and alerting webhooks.
           </p>
         </div>
 
-        <div className="flex items-center gap-3 w-full md:w-auto justify-end">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 w-full md:w-auto justify-end">
           <Button 
             variant="outline" 
             onClick={handleExportConfig}
-            className="gap-2 border-slate-700 hover:bg-slate-800 text-slate-300 cursor-pointer"
+            className="gap-2 border-slate-700 hover:bg-slate-800 text-slate-300 cursor-pointer text-xs sm:text-sm"
           >
             <Download className="h-4 w-4" /> Export Config
           </Button>
           <Button 
             onClick={handleSaveAll}
-            className="gap-2 bg-primary hover:bg-primary/90 text-slate-950 font-bold shadow-[0_0_20px_rgba(6,182,212,0.4)] cursor-pointer"
+            className="gap-2 bg-primary hover:bg-primary/90 text-slate-950 font-bold shadow-[0_0_20px_rgba(6,182,212,0.4)] cursor-pointer text-xs sm:text-sm"
           >
             <Check className="h-4 w-4" /> Save All Settings
           </Button>
@@ -207,7 +207,8 @@ export default function Settings() {
 
       {/* Main Tabs Container */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="bg-slate-900/80 border border-slate-800 p-1.5 rounded-xl grid grid-cols-2 md:grid-cols-5 gap-1 h-auto">
+        <TabsList className="bg-slate-900/80 border border-slate-800 p-1.5 rounded-xl grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-1 h-auto">
+
           <TabsTrigger value="ai" className="gap-2 py-2.5 data-[state=active]:bg-primary/20 data-[state=active]:text-primary data-[state=active]:border data-[state=active]:border-primary/40 rounded-lg">
             <BrainCircuit className="h-4 w-4" /> AI Engine
           </TabsTrigger>

@@ -79,20 +79,21 @@ export default function PolicyGenerator() {
 
   return (
     <div className="space-y-6 h-full flex flex-col">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Policy Generator</h1>
-          <p className="text-slate-400">Compare and review generated least-privilege policies</p>
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight">Policy Generator</h1>
+          <p className="text-xs sm:text-sm text-slate-400">Compare and review generated least-privilege policies</p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline" className="gap-2 cursor-pointer" onClick={handleExportJson}>
+        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+          <Button variant="outline" className="flex-1 sm:flex-none gap-2 cursor-pointer text-xs sm:text-sm" onClick={handleExportJson}>
             <Download className="h-4 w-4" /> Export JSON
           </Button>
-          <Button className="gap-2 cursor-pointer bg-primary text-slate-950 font-semibold" onClick={handleSimulate}>
+          <Button className="flex-1 sm:flex-none gap-2 cursor-pointer bg-primary text-slate-950 font-semibold text-xs sm:text-sm" onClick={handleSimulate}>
             <Play className="h-4 w-4" /> Run Simulation
           </Button>
         </div>
       </div>
+
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 flex-1 min-h-[400px]">
         <Card className="flex flex-col bg-slate-900 border-slate-700">

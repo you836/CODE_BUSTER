@@ -66,23 +66,24 @@ export default function DependencyGraph() {
   return (
     <div className="h-full flex flex-col space-y-4">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Service Dependency Graph</h1>
-        <p className="text-slate-400">Visual mapping of IAM cross-service interactions and permission dependencies</p>
+        <h1 className="text-xl sm:text-2xl font-bold tracking-tight">Service Dependency Graph</h1>
+        <p className="text-xs sm:text-sm text-slate-400">Visual mapping of IAM cross-service interactions and permission dependencies</p>
       </div>
       
-      <div className="flex-1 rounded-xl border border-slate-700 bg-slate-900/50 overflow-hidden relative">
+      <div className="flex-1 min-h-[400px] sm:min-h-[500px] rounded-xl border border-slate-700 bg-slate-900/50 overflow-hidden relative">
         <ReactFlow nodes={nodes} edges={edges} fitView className="dark">
           <Background color="#334155" gap={16} />
           <Controls className="bg-slate-800 fill-white" />
         </ReactFlow>
-        <div className="absolute top-4 right-4 bg-slate-900 border border-slate-700 p-4 rounded-lg w-64 shadow-lg">
-          <h3 className="font-semibold mb-2">Graph Legend</h3>
-          <div className="space-y-2 text-sm text-slate-400">
-            <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-primary" /> Service Node</div>
-            <div className="flex items-center gap-2"><div className="w-4 h-0 border-t-2 border-primary border-dashed" /> Active Dependency</div>
+        <div className="hidden sm:block absolute top-4 right-4 bg-slate-900/90 backdrop-blur border border-slate-700 p-3 rounded-lg w-56 shadow-lg text-xs">
+          <h3 className="font-semibold mb-2 text-slate-200">Graph Legend</h3>
+          <div className="space-y-1.5 text-slate-400">
+            <div className="flex items-center gap-2"><div className="w-2.5 h-2.5 rounded-full bg-primary" /> Service Node</div>
+            <div className="flex items-center gap-2"><div className="w-3.5 h-0 border-t-2 border-primary border-dashed" /> Active Dependency</div>
           </div>
         </div>
       </div>
     </div>
   );
 }
+

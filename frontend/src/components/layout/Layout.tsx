@@ -42,6 +42,8 @@ const HYPERSPEED_OPTIONS: HyperspeedOptions = {
 };
 
 export default function Layout() {
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
   return (
     <div className="flex h-screen overflow-hidden bg-transparent text-text-primary relative">
       {/* 3D Hyperspeed WebGL Background across all internal pages */}
@@ -52,10 +54,10 @@ export default function Layout() {
       </div>
 
       <div className="relative z-10 flex h-full w-full overflow-hidden">
-        <Sidebar />
+        <Sidebar mobileOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-          <TopNav />
-          <main className="flex-1 overflow-y-auto p-6 scroll-smooth">
+          <TopNav onToggleMobileMenu={() => setMobileOpen(prev => !prev)} />
+          <main className="flex-1 overflow-y-auto p-3.5 sm:p-5 md:p-6 scroll-smooth">
             <Outlet />
           </main>
         </div>
@@ -63,3 +65,4 @@ export default function Layout() {
     </div>
   );
 }
+

@@ -40,16 +40,17 @@ export default function Simulation() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Access Simulation</h1>
-          <p className="text-slate-400">Test proposed policies against historical access patterns safely</p>
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight">Access Simulation</h1>
+          <p className="text-xs sm:text-sm text-slate-400">Test proposed policies against historical access patterns safely</p>
         </div>
-        <Button onClick={runSimulation} disabled={running} className="gap-2 bg-primary text-slate-950 font-semibold h-10">
+        <Button onClick={runSimulation} disabled={running} className="w-full sm:w-auto gap-2 bg-primary text-slate-950 font-semibold h-10 text-xs sm:text-sm cursor-pointer">
           {running ? <div className="h-4 w-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" /> : <Play className="h-4 w-4" />}
           {running ? 'Simulating...' : 'Run Simulation'}
         </Button>
       </div>
+
 
       {ran && (
         <div className={`border p-4 rounded-lg flex items-center gap-3 ${data?.passed === false ? 'bg-danger/20 border-danger/50 text-danger' : 'bg-success/20 border-success/50 text-success'}`}>
